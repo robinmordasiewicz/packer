@@ -16,6 +16,7 @@
       "disk_size": "5000M",
       "format": "qcow2",
       "accelerator": "kvm",
+      "headless": true,
       "http_directory": "http",
       "ssh_username": "root",
       "ssh_password": "s0m3password",
