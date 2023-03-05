@@ -19,7 +19,7 @@
       "headless": true,
       "http_directory": "http",
       "ssh_username": "root",
-      "ssh_password": "s0m3password",
+      "ssh_password": "ubuntu",
       "ssh_timeout": "20m",
       "vm_name": "tdhtest",
       "net_device": "virtio-net",
