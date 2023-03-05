@@ -1,0 +1,33 @@
+{
+  "variables": {
+    "centos_password": "centos",
+    "version": "2009"
+  },
+  "builders": [
+    {
+      "type": "qemu",
+      "iso_urls": [
+        "iso/CentOS-7-x86_64-Minimal-{{ user `version` }}.iso",
+        "http://mirror.de.leaseweb.net/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-{{ user `version` }}.iso"
+      ],
+      "iso_checksum": "a4711c4fa6a1fb32bd555fae8d885b12",
+      "output_directory": "output_centos_tdhtest",
+      "shutdown_command": "echo 'packer' | sudo -S shutdown -P now",
+      "disk_size": "5000M",
+      "format": "qcow2",
+      "accelerator": "kvm",
+      "http_directory": "http",
+      "ssh_username": "root",
+      "ssh_password": "s0m3password",
+      "ssh_timeout": "20m",
+      "vm_name": "tdhtest",
+      "net_device": "virtio-net",
+      "disk_interface": "virtio",
+      "boot_wait": "10s",
+      "boot_command": [
+        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter><wait>"
+      ]
+    }
+  ]
+}
+
