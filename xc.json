@@ -1,0 +1,45 @@
+{
+   "variables": {
+        "old_ssh_pass": "Volterra123",
+        "new_ssh_pass": "Volterra123"
+    },
+   "builders": [
+    {
+      "boot_command": [
+        "<enter><wait1200>",
+        "admin<enter><wait3>",
+        "{{user `old_ssh_pass`}}<enter><wait3>",
+        "{{user `old_ssh_pass`}}<enter><wait3>",
+        "{{user `new_ssh_pass`}}<enter><wait3>",
+        "{{user `new_ssh_pass`}}<enter><wait3>"
+      ],
+      "boot_wait": "2s",
+      "cpus": 4,
+      "headless": true,
+      "http_directory": "http",
+      "iso_target_path": "iso",
+      "iso_checksum": "0d6c8473a526d6c289bab8b899ed1244",
+      "iso_urls": [
+	"iso/vsb-ves-ce-certifiedhw-generic-production-centos-7.2009.27-202211040823.1667791030.iso"
+      ],
+      "memory": "16384",
+      "format": "qcow2",
+      "qemuargs": [
+        [
+          "-cpu",
+          "host"
+        ],
+        [
+          "-device",
+          "isa-fdc,id=floppy-bus"
+        ]
+      ],
+      "output_directory": "output-xc",
+      "ssh_password": "Volterra123",
+      "ssh_timeout": "20m",
+      "ssh_username": "admin",
+      "type": "qemu",
+      "vm_name": "xc.qcow2"
+    }
+  ]
+}
