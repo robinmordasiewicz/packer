@@ -34,8 +34,13 @@ variable "checksum" {
   default = "0d6c8473a526d6c289bab8b899ed1244"
 }
 
+variable "isopath" {
+  type    = string
+  defualt = "/var/lib/libvirt/images/iso/"
+}
+
 locals {
-  isourl  = "${var.mirror}/${var.uripath}/${var.distroname}/${var.distroversion}-${var.build}"
+  isourl = "${var.mirror}/${var.uripath}/${var.distroname}/${var.distroversion}-${var.build}"
 }
 
 source "qemu" "installmedia" {
@@ -47,11 +52,11 @@ source "qemu" "installmedia" {
   cpus             = 2
   headless         = false
   iso_checksum     = var.checksum
-  iso_target_path  = "/var/lib/libvirt/images/iso/"
-  iso_urls         = ["/var/lib/libvirt/images/iso/", "${var.uripath}/${var.isoversion}.iso"]
+  iso_target_path  = "${var.isopath}"
+  iso_urls         = ["${var.isopath}", "${var.uripath}/${var.isoversion}.iso"]
   memory           = "2048"
   disk_size        = "25000M"
-  output_directory = "output-xc"
+  output_directory = "${var.isopath}/../templates/${var.isoversion}"
   qemuargs = [
     ["-cpu", "host"],
     ["-device", "isa-fdc,id=floppy-bus"],
