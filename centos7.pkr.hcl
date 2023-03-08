@@ -1,19 +1,4 @@
 
-variable "mirror" {
-  type    = string
-  default = "https://downloads.volterra.io"
-}
-
-variable "isoversion" {
-  type    = string
-  default = "vsb-ves-ce-certifiedhw-generic-production-centos-7.2009.27-202211040823.1667791030"
-}
-
-variable "distroname" {
-  type    = string
-  default = "centos"
-}
-
 variable "distroversion" {
   type    = string
   default = "7.2009.27"
@@ -21,12 +6,7 @@ variable "distroversion" {
 
 variable "build" {
   type    = string
-  default = "202211040823"
-}
-
-variable "uripath" {
-  type    = string
-  default = "/dev/images/centos/"
+  default = "202211040823.1667791030"
 }
 
 variable "checksum" {
@@ -36,11 +16,22 @@ variable "checksum" {
 
 variable "isopath" {
   type    = string
-  defualt = "/var/lib/libvirt/images/iso/"
+  default = "/var/lib/libvirt/images/iso"
 }
 
-locals {
-  isourl = "${var.mirror}/${var.uripath}/${var.distroname}/${var.distroversion}-${var.build}"
+variable "customversion" {
+  type    = string
+  default = "vsb-ves-ce-certifiedhw-generic-production-centos-7.2009.27-202211040823.1667791030"
+}
+
+variable "downloadurl" {
+  type    = string
+  default = "https://downloads.volterra.io/dev/images/centos/7.2009.27-202211040823/vsb-ves-ce-certifiedhw-generic-production-centos-7.2009.27-202211040823.1667791030.iso"
+}
+
+variable "md5sum" {
+  type    = string
+  default = "https://downloads.volterra.io/dev/images/centos/7.2009.27-202211040823/vsb-ves-ce-certifiedhw-generic-production-centos-7.2009.27-202211040823.1667791030.iso.md5"
 }
 
 source "qemu" "installmedia" {
@@ -53,10 +44,10 @@ source "qemu" "installmedia" {
   headless         = false
   iso_checksum     = var.checksum
   iso_target_path  = "${var.isopath}"
-  iso_urls         = ["${var.isopath}", "${var.uripath}/${var.isoversion}.iso"]
-  memory           = "2048"
+  iso_urls         = ["${var.isopath}", "${var.downloadurl}"]
+  memory           = "4096"
   disk_size        = "25000M"
-  output_directory = "${var.isopath}/../templates/${var.isoversion}"
+  output_directory = "${var.isopath}/../templates/${var.customversion}"
   qemuargs = [
     ["-cpu", "host"],
     ["-device", "isa-fdc,id=floppy-bus"],
@@ -65,7 +56,7 @@ source "qemu" "installmedia" {
   #shutdown_timeout = "2m"
   machine_type     = "q35"
   shutdown_command = ""
-  vm_name          = "${var.isoversion}.qcow2"
+  vm_name          = "${var.customversion}.qcow2"
 }
 
 build {

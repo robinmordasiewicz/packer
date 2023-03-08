@@ -3,4 +3,4 @@
 
 packer init .
 packer fmt .
-packer build centos7.hcl
+packer build centos7.pkr.hcl
