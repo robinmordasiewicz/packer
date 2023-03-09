@@ -47,6 +47,9 @@ source "qemu" "installmedia" {
   iso_urls         = ["${var.isopath}", "${var.downloadurl}"]
   memory           = "4096"
   disk_size        = "25000M"
+  disk_cache       = "none"
+  disk_discard     = "unmap"
+  cpu_model        = "host"
   output_directory = "${var.isopath}/../templates/${var.customversion}"
   qemuargs = [
     ["-cpu", "host"],
